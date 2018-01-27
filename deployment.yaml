@@ -1,5 +1,5 @@
 git:
-    remote: https://github.com/HackGT/execquiz.git
-    branch: master
+    remote: https://github.com/HackGT/memes.git
+    branch: michael
 
 target_port: 80

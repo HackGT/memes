@@ -82,6 +82,7 @@ init =
 --
 type Msg = UpdateList (Result Http.Error (Array.Array String))
          | Verify String (Result Http.Error String)
+         | RequestUpdate
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -103,14 +104,27 @@ update msg model =
             in
             ({ model | memes = new_memes }, verify_next new_memes)
 
+        RequestUpdate -> (model, update_list)
+
 
 --
 -- VIEW
 --
 view : Model -> Html Msg
-view model = div []
-             [
-             ]
+view model =
+    div []
+    [ div [class "links"] (List.map link_to_html (Dict.values model.memes))
+    , button [onClick RequestUpdate, class "refresh"] [text "Refresh"]
+    ]
+
+
+link_to_html : Link -> Html Msg
+link_to_html link =
+    div [classList [("alive", link.alive), ("ping", link.ping)]]
+    [ a [href link.href]
+        [text link.text]
+    ]
+
 
 main : Program Never Model Msg
 main = Html.program
