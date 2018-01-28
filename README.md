@@ -19,7 +19,7 @@ Add any memes you want to host on the site to your branch. Then, create an `inde
 
 Create a `Dockerfile` with the following contents and commit to your branch:
  ```
- FROM nginx
+ FROM hackgt/nginx
  COPY . /usr/share/nginx/html/
  ```
 The first line tells us to inherit a pre-built container called `nginx`. The rest of our Docker commands will run ontop of this pre-built container. The `nginx` container is a web server that simply serves anything located in `/usr/share/nginx/html/` on port `80`. So, the second line tells Docker to copy all of our files (meme images and `index.html`) from our _local machine_ into `/usr/share/nginx/html/` in the _virtual container_. 
