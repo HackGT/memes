@@ -2,6 +2,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import List exposing (..)
+import Random.List as RList
+import Random
 import Array
 import Regex
 import Json.Decode as J
@@ -50,6 +52,14 @@ verify_next links =
     |> Maybe.withDefault Cmd.none
 
 
+titles : List String
+titles = [ "Deployed Memes Explorer"
+         , "etherscan.io"
+         , "explorer.exe"
+         , "Firefox OS"
+         ]
+
+
 --
 -- MODEL
 --
@@ -65,6 +75,7 @@ type alias Links = Dict.Dict String Link
 type alias Model =
     { memes: Links
     , error_update: Maybe Http.Error
+    , title: Maybe String
     }
 
 
@@ -73,8 +84,9 @@ init =
     (
      { memes = Dict.empty
      , error_update = Nothing
+     , title = Nothing
      }
-    , update_list
+    , Random.generate NewTitle (RList.choose titles)
     )
 
 --
@@ -83,6 +95,7 @@ init =
 type Msg = UpdateList (Result Http.Error (Array.Array String))
          | Verify String (Result Http.Error String)
          | RequestUpdate
+         | NewTitle (Maybe String, List String)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -106,6 +119,8 @@ update msg model =
 
         RequestUpdate -> (model, update_list)
 
+        NewTitle (title, _) -> ({ model | title = title }, update_list)
+
 
 --
 -- VIEW
@@ -113,7 +128,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-    [ div [class "links"] (List.map link_to_html (Dict.values model.memes))
+    [ h1 [class "title"] [text (Maybe.withDefault ";0" model.title)]
+    , div [class "links"] (List.map link_to_html (Dict.values model.memes))
     , button [onClick RequestUpdate, class "refresh"] [text "Refresh"]
     ]
 
