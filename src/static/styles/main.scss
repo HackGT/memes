@@ -36,6 +36,12 @@ button.refresh {
 .bulletins {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img, iframe {
+        margin-bottom: 1rem;
+    }
 }
 
 .with-margins {
