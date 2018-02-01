@@ -1,0 +1,13 @@
+body, #meme {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./meme.jpg");
+    background-repeat: repeat;
+    margin: 0;
+    padding: 0;
+    transition: 2s all;
+}
+
+#meme:hover {
+    transform: rotate(720deg);
+}
