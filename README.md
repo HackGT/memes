@@ -32,6 +32,36 @@ Created a file called `deployment.yaml` with the follow contents and commit it t
 target_port: 80 
 ```
 
+## Step 4.5, Push IT!
+
+Now you're ready to get your ducks in a row and push to GitHub!
+
+Add all the files you want to commit to the _staging area_:
+```
+git add <file one> <file two> ...
+```
+
+Check to see that all the changes you want to commit are written in green in:
+```
+git status
+```
+
+Commit everything:
+```
+git commit -m 'My commit message here!'
+```
+
+Finally, push:
+```
+git push origin <branch name>
+```
+
+If your push failed, make sure your in-sync with GitHub by pulling any possibly new changes:
+```
+git pull -r origin <branch name>
+```
+
+
 ## Step 5, Deployment
 That's all you need to build an application in our cluster! Let's discuss deployment.
 
